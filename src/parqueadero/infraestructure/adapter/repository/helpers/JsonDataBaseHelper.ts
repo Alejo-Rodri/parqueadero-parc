@@ -1,7 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-// Define la estructura de nuestro archivo JSON
 interface DbSchema {
   registros: any[];
   clientesTienda: string[];
@@ -11,7 +10,6 @@ export default class JsonDatabaseHelper {
   private readonly filePath: string;
 
   constructor() {
-    // Construye la ruta al archivo db.json desde la raíz del proyecto
     this.filePath = path.join(process.cwd(), 'database', 'db.json');
   }
 
@@ -23,7 +21,6 @@ export default class JsonDatabaseHelper {
       const data = await fs.readFile(this.filePath, 'utf-8');
       return JSON.parse(data) as DbSchema;
     } catch (error) {
-      // Si el archivo no existe o hay un error, devuelve una estructura vacía
       console.error('Error reading database file:', error);
       return { registros: [], clientesTienda: [] };
     }

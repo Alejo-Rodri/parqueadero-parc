@@ -1,0 +1,22 @@
+{
+  "registros": [
+    {
+      "id": "7afdbccf-5a50-4823-8b86-18c079b671c4",
+      "vehiculo": {
+        "placa": "AAA-111",
+        "tipo": "true"
+      },
+      "horaIngreso": "2025-09-08T23:07:01.483Z",
+      "estado": "ACTIVO",
+      "esClienteTienda": true
+    }
+  ],
+  "clientesTienda": [
+    "AAA-111",
+    "CCC-333",
+    "EEE-555",
+    "GGG-777",
+    "III-999",
+    "XYZ-123"
+  ]
+}
