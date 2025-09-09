@@ -37,12 +37,13 @@ export default class ParkingRepository implements ParkingRepositoryPort {
 
   async getFinishedByDate(date: Date): Promise<Registro[]> {
     const db = await this.dbHelper.read();
+    console.log(db);
     return db.registros.filter((r) => {
       if (!r.horaSalida) return false;
       const salidaDate = new Date(r.horaSalida);
       return (
         r.estado === Estado.FINALIZADO &&
-        salidaDate.toISOString().startsWith(date.toISOString().substring(0, 10))
+        salidaDate.toDateString() === date.toDateString()
       );
     }) as Registro[];
   }

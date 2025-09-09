@@ -74,7 +74,7 @@ export default class ParkingService implements ParqueaderoUseCasePort {
   async getDailyBalance(date: Date): Promise<Balance> {
     // Lógica para generar el balance diario.
     const registrosDelDia = await this.repository.getFinishedByDate(date);
-
+    console.log(registrosDelDia);
     // Calculamos el recaudo total sumando el monto de cada registro
     const recaudoTotal = registrosDelDia.reduce((suma, registro) => {
       return suma + (registro.montoPagado || 0);

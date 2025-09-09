@@ -64,5 +64,4 @@ export default class ParqueaderoController extends AbstractController {
       res.status(this.HTTPStatusCode.INTERNAL_SERVER_ERROR).json({ error: 'Error interno del servidor.' });
     }
   };
-  
 }
