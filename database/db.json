@@ -1,14 +1,27 @@
 {
   "registros": [
     {
-      "id": "7afdbccf-5a50-4823-8b86-18c079b671c4",
+      "id": "6445f9d4-65c8-487b-b0b7-0c3aeca7da39",
+      "vehiculo": {
+        "placa": "GHN-039",
+        "tipo": "CARRO"
+      },
+      "horaIngreso": "2025-09-08T23:44:22.418Z",
+      "estado": "FINALIZADO",
+      "esClienteTienda": false,
+      "horaSalida": "2025-09-08T23:57:01.766Z",
+      "montoPagado": 1361.3600000000001
+    },
+    {
+      "id": "43d7a13f-e91e-4683-a826-482bd56acb01",
       "vehiculo": {
         "placa": "AAA-111",
-        "tipo": "true"
+        "tipo": "MOTO"
       },
-      "horaIngreso": "2025-09-08T23:07:01.483Z",
-      "estado": "ACTIVO",
-      "esClienteTienda": true
+      "horaIngreso": "2025-09-08T23:44:51.046Z",
+      "estado": "FINALIZADO",
+      "esClienteTienda": true,
+      "montoPagado": 0
     }
   ],
   "clientesTienda": [

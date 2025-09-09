@@ -33,6 +33,7 @@ export default class ParkingService implements ParqueaderoUseCasePort {
   async processVehicleExit(placa: string): Promise<Registro> {
     // Lógica para procesar la salida.
     const registroActivo = await this.repository.findActiveByPlate(placa);
+    console.log(registroActivo);
 
     if (!registroActivo) {
       throw new Error('No se encontró un vehículo activo con la placa proporcionada.');
@@ -41,27 +42,30 @@ export default class ParkingService implements ParqueaderoUseCasePort {
     // Si el cliente está registrado en la tienda, el costo es $0
     if (registroActivo.esClienteTienda) {
       registroActivo.montoPagado = 0;
-    } else {
-      // Calcular el costo si no es cliente
-      const horaSalida = new Date();
-      const horaIngreso = registroActivo.horaIngreso;
-      
-      // Diferencia en milisegundos
-      const diffMs = horaSalida.getTime() - horaIngreso.getTime();
-      // Convertir a minutos
-      const minutosEstacionado = Math.ceil(diffMs / (1000 * 60));
 
-      let costoSinIva = 0;
-      if (registroActivo.vehiculo.tipo === TipoVehiculo.CARRO) {
-        costoSinIva = minutosEstacionado * Tarifa.PRECIO_CARRO_MINUTO;
-      } else {
-        costoSinIva = minutosEstacionado * Tarifa.PRECIO_MOTO_MINUTO;
-      }
-
-      const montoIva = costoSinIva * Tarifa.IVA;
-      registroActivo.montoPagado = costoSinIva + montoIva;
-      registroActivo.horaSalida = horaSalida;
+      registroActivo.estado = Estado.FINALIZADO;
+      return this.repository.update(registroActivo);
     }
+
+    // Calcular el costo si no es cliente
+    const horaSalida = new Date();
+    const horaIngreso = registroActivo.horaIngreso;
+    
+    // Diferencia en milisegundos
+    const diffMs = horaSalida.getTime() - horaIngreso.getTime();
+    // Convertir a minutos
+    const minutosEstacionado = Math.ceil(diffMs / (1000 * 60));
+
+    let costoSinIva = 0;
+    if (registroActivo.vehiculo.tipo === TipoVehiculo.CARRO) {
+      costoSinIva = minutosEstacionado * Tarifa.PRECIO_CARRO_MINUTO;
+    } else {
+      costoSinIva = minutosEstacionado * Tarifa.PRECIO_MOTO_MINUTO;
+    }
+
+    const montoIva = costoSinIva * Tarifa.IVA;
+    registroActivo.montoPagado = costoSinIva + montoIva;
+    registroActivo.horaSalida = horaSalida;    
 
     registroActivo.estado = Estado.FINALIZADO;
     return this.repository.update(registroActivo);

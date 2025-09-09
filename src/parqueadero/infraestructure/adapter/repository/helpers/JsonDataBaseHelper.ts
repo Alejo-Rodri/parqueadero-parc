@@ -1,8 +1,15 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import Registro from '../../../../domain/model/Registro';
+import { mapRegistro } from '../../utils/MapperRegistro';
+
+interface DbSchemaRaw {
+  registros: any[];
+  clientesTienda: string[];
+}
 
 interface DbSchema {
-  registros: any[];
+  registros: Registro[];
   clientesTienda: string[];
 }
 
@@ -19,7 +26,12 @@ export default class JsonDatabaseHelper {
   public async read(): Promise<DbSchema> {
     try {
       const data = await fs.readFile(this.filePath, 'utf-8');
-      return JSON.parse(data) as DbSchema;
+      const parsed: DbSchemaRaw = JSON.parse(data);
+
+      return {
+        registros: parsed.registros.map(r => mapRegistro(r)),
+        clientesTienda: parsed.clientesTienda
+      };
     } catch (error) {
       console.error('Error reading database file:', error);
       return { registros: [], clientesTienda: [] };
